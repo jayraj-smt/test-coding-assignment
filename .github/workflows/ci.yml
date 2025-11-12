@@ -121,6 +121,14 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install root dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
       - name: Install backend dependencies
         working-directory: ./backend
         run: |
@@ -139,7 +147,7 @@ jobs:
             npm install
           fi
 
-      - name: Install Playwright
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
       - name: Run E2E tests
