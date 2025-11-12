@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from '../routes/auth';
 import sequelize from '../db/sequelize';
-import User from '../models/User';
 
 const app = express();
 app.use(cors());
@@ -18,10 +17,6 @@ describe('Auth API', () => {
 
   afterAll(async () => {
     await sequelize.close();
-  });
-
-  beforeEach(async () => {
-    await User.destroy({ where: {}, truncate: true });
   });
 
   describe('POST /api/auth/signup', () => {
