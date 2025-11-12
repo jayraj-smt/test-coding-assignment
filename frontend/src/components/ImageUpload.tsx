@@ -98,16 +98,8 @@ const ImageUpload = ({ onImageSelect, previewUrl, disabled = false }: ImageUploa
           aria-label="File input"
         />
         {previewUrl ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative"
-          >
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="max-h-64 mx-auto rounded-lg"
-            />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
+            <img src={previewUrl} alt="Preview" className="max-h-64 mx-auto rounded-lg" />
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -141,9 +133,7 @@ const ImageUpload = ({ onImageSelect, previewUrl, disabled = false }: ImageUploa
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               <span className="font-semibold">Click to upload</span> or drag and drop
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-              PNG, JPG up to 10MB
-            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">PNG, JPG up to 10MB</p>
           </div>
         )}
       </div>

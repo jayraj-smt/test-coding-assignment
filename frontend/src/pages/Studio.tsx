@@ -71,7 +71,7 @@ const Studio = () => {
     abortControllerRef.current = new AbortController();
 
     try {
-      const result = await generationService.createGeneration(
+      await generationService.createGeneration(
         prompt,
         style,
         selectedImage,

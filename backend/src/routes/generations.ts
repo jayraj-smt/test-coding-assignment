@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { createGenerationController, getGenerationsController } from '../controllers/generationController';
+import {
+  createGenerationController,
+  getGenerationsController,
+} from '../controllers/generationController';
 import { authenticate } from '../middleware/auth';
 import { upload } from '../middleware/upload';
 import { validate } from '../middleware/validate';

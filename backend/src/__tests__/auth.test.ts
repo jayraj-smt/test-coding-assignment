@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from '../routes/auth';
 import sequelize from '../db/sequelize';
-import User from '../models/User';
 
 const app = express();
 app.use(cors());
@@ -12,16 +11,15 @@ app.use('/api/auth', authRoutes);
 
 describe('Auth API', () => {
   beforeAll(async () => {
+    // Set environment variables for tests
+    process.env.JWT_SECRET = 'test-secret';
+    process.env.JWT_EXPIRES_IN = '7d';
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
   });
 
   afterAll(async () => {
     await sequelize.close();
-  });
-
-  beforeEach(async () => {
-    await User.destroy({ where: {}, truncate: true });
   });
 
   describe('POST /api/auth/signup', () => {

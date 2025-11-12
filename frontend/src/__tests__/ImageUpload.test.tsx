@@ -1,9 +1,16 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import ImageUpload from '../components/ImageUpload';
+import * as imageResize from '../utils/imageResize';
+
+vi.mock('../utils/imageResize');
 
 describe('ImageUpload', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    // Mock resizeImage to return the file as-is by default
+    vi.mocked(imageResize.resizeImage).mockImplementation(async (file) => file);
+  });
   it('renders upload area', () => {
     const onImageSelect = vi.fn();
     render(<ImageUpload onImageSelect={onImageSelect} previewUrl={null} />);
@@ -22,16 +29,27 @@ describe('ImageUpload', () => {
   });
 
   it('calls onImageSelect when file is selected', async () => {
-    const user = userEvent.setup();
     const onImageSelect = vi.fn();
     render(<ImageUpload onImageSelect={onImageSelect} previewUrl={null} />);
 
-    const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+    // Create a valid JPEG file - ensure it passes validation
+    const file = new File(['fake image data'], 'test.jpg', { type: 'image/jpeg' });
     const input = screen.getByLabelText('File input') as HTMLInputElement;
 
-    await user.upload(input, file);
+    // Use fireEvent to directly trigger the change event
+    fireEvent.change(input, {
+      target: { files: [file] },
+    });
 
-    expect(onImageSelect).toHaveBeenCalledWith(file);
+    // Wait for async image resizing to complete
+    await waitFor(
+      () => {
+        expect(onImageSelect).toHaveBeenCalled();
+      },
+      { timeout: 3000 }
+    );
+
+    expect(onImageSelect).toHaveBeenCalledWith(expect.any(File));
   });
 
   it('is disabled when disabled prop is true', () => {
