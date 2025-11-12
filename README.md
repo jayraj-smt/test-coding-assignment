@@ -1,1 +1,2 @@
-# test-coding-assignment
+# AI Studio - Fashion Image Generation Platform
+
