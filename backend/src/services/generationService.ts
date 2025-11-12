@@ -1,8 +1,8 @@
 import Generation from '../models/Generation';
 
-const simulateModelOverload = (): boolean => {
-  return Math.random() < 0.2;
-};
+// const simulateModelOverload = (): boolean => {
+//   return Math.random() < 0.2;
+// };
 
 const simulateDelay = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms));

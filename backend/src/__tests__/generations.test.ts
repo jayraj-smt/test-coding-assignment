@@ -143,8 +143,6 @@ describe('Generations API', () => {
     }, 20000);
 
     it('should limit results to 5 by default', async () => {
-      const imageBuffer = createTestImage();
-
       for (let i = 0; i < 7; i++) {
         await Generation.create({
           userId,
