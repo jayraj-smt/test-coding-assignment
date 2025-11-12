@@ -4,9 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import Studio from '../pages/Studio';
 import { AuthProvider } from '../contexts/AuthContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
-import * as generationService from '../services/generationService';
 
-vi.mock('../services/generationService');
+const mockGetRecentGenerations = vi.fn();
+const mockCreateGeneration = vi.fn();
+
+vi.mock('../services/generationService', () => ({
+  generationService: {
+    getRecentGenerations: mockGetRecentGenerations,
+    createGeneration: mockCreateGeneration,
+  },
+}));
 
 const renderStudio = () => {
   return render(
@@ -24,7 +31,7 @@ describe('Studio', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
-    vi.spyOn(generationService, 'getRecentGenerations').mockResolvedValue([]);
+    mockGetRecentGenerations.mockResolvedValue([]);
   });
 
   it('renders generation form', async () => {
