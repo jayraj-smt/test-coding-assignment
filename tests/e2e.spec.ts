@@ -24,8 +24,18 @@ test.describe('AI Studio E2E Flow', () => {
     await page.click('button[type="submit"]')
 
     await page.waitForURL('**/studio')
+    await page.waitForLoadState('networkidle')
 
-    const fileInput = page.locator('input[type="file"]')
+    // Wait for upload area to be visible (ensures ImageUpload component is rendered)
+    await page.waitForSelector('text=/Click to upload|Upload Image/i', {
+      timeout: 10000,
+    })
+
+    // Wait for the file input to be attached to DOM using aria-label (it's hidden but should exist)
+    const fileInput = page.locator(
+      'input[type="file"][aria-label="File input"]'
+    )
+    await fileInput.waitFor({ state: 'attached', timeout: 10000 })
     await fileInput.setInputFiles({
       name: 'test-image.jpg',
       mimeType: 'image/jpeg',
@@ -68,17 +78,40 @@ test.describe('AI Studio E2E Flow', () => {
   })
 
   test('Error handling - Model overloaded retry', async ({ page }) => {
-    await page.goto(BASE_URL)
+    // Create a new user for this test
+    const timestamp = Date.now()
+    const email = `test${timestamp}@example.com`
+    const password = 'password123'
 
+    await page.goto(BASE_URL)
     await page.waitForURL('**/login')
 
-    await page.fill('input[name="email"]', 'test@example.com')
-    await page.fill('input[name="password"]', 'password123')
+    // Sign up first
+    await page.click('text=Sign up')
+    await page.waitForURL('**/signup')
+    await page.fill('input[name="email"]', email)
+    await page.fill('input[name="password"]', password)
+    await page.fill('input[name="confirmPassword"]', password)
     await page.click('button[type="submit"]')
 
-    await page.waitForURL('**/studio', { timeout: 5000 }).catch(() => {})
+    await page.waitForURL('**/studio', { timeout: 10000 })
+    await page.waitForLoadState('networkidle')
 
-    const fileInput = page.locator('input[type="file"]')
+    // Wait for the Studio page to be fully loaded
+    await page.waitForSelector('h2:has-text("Create New Generation")', {
+      timeout: 10000,
+    })
+
+    // Wait for upload area to be visible (ensures ImageUpload component is rendered)
+    await page.waitForSelector('text=/Click to upload|Upload Image/i', {
+      timeout: 10000,
+    })
+
+    // Wait for the file input to be attached to DOM using aria-label (it's hidden but should exist)
+    const fileInput = page.locator(
+      'input[type="file"][aria-label="File input"]'
+    )
+    await fileInput.waitFor({ state: 'attached', timeout: 10000 })
     await fileInput.setInputFiles({
       name: 'test-image.jpg',
       mimeType: 'image/jpeg',
