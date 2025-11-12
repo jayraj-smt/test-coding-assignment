@@ -20,6 +20,9 @@ describe('Generations API', () => {
   let userCounter = 0;
 
   beforeAll(async () => {
+    // Set environment variables for tests
+    process.env.JWT_SECRET = 'test-secret';
+    process.env.JWT_EXPIRES_IN = '7d';
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
   });
