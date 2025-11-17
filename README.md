@@ -4,7 +4,7 @@ Welcome to AI Studio! This is a full-stack web app designed for experimenting wi
 
 ---
 
-## 🚀 What Can You Do Here?
+## What Can You Do Here?
 
 - **Sign up & Sign in:** Secure, JWT-based authentication to keep your account safe.
 - **Easy Image Upload:** Drag & drop or select images to upload—JPEG/PNG, up to 10MB each.
@@ -19,7 +19,7 @@ Welcome to AI Studio! This is a full-stack web app designed for experimenting wi
 
 ---
 
-## 🛠️ Tech in a Nutshell
+## Tech in a Nutshell
 
 ### Frontend
 
@@ -46,7 +46,7 @@ Welcome to AI Studio! This is a full-stack web app designed for experimenting wi
 
 ---
 
-## 🖥️ Getting Started
+## Getting Started
 
 ### Option 1: Quickstart with Docker
 
