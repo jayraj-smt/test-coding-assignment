@@ -1,309 +1,267 @@
-# AI Studio - Fashion Image Generation Platform
+# AI Studio – Fashion Image Generation Platform
 
-A full-stack web application for simulating AI-powered fashion image generation. Built with React, TypeScript, Node.js, Express, Sequelize, and PostgreSQL.
+Welcome to AI Studio! This is a full-stack web app designed for experimenting with AI-powered fashion image generation. It's built for modern devs using React, TypeScript, Node.js, Express, Sequelize, and PostgreSQL.
 
-## Features
+---
 
-- 🔐 **User Authentication**: JWT-based signup and login
-- 🖼️ **Image Upload**: Drag-and-drop or click to upload images (max 10MB, JPEG/PNG)
-- 🎨 **Style Selection**: Choose from multiple fashion styles
-- ⚡ **Generation Simulation**: Simulated AI generation with 20% error rate
-- 🔄 **Retry Logic**: Automatic retry up to 3 times with exponential backoff
-- 🛑 **Abort Functionality**: Cancel in-flight generation requests
-- 📜 **Generation History**: View and restore last 5 generations
-- 🌙 **Dark Mode**: Toggle between light and dark themes
-- ♿ **Accessibility**: Keyboard navigation, ARIA labels, focus states
-- 📱 **Responsive Design**: Works on desktop and mobile devices
+## 🚀 What Can You Do Here?
 
-## Tech Stack
+- **Sign up & Sign in:** Secure, JWT-based authentication to keep your account safe.
+- **Easy Image Upload:** Drag & drop or select images to upload—JPEG/PNG, up to 10MB each.
+- **Choose Your Style:** Play around with a variety of fashion styles before generating images.
+- **Generation Sim Demo:** AI-powered image generation is simulated for demo purposes, with an intentional 20% error rate to keep things interesting.
+- **Automatic Retry:** Failures? No worries—auto-retries up to 3 times, ramping up the wait each time.
+- **Abort When You Like:** Change your mind? You can cancel ongoing image generations anytime.
+- **Generation History:** Quickly access or restore your last 5 creations.
+- **Dark Mode:** Flip between light & dark themes as you like.
+- **Accessible by Design:** Built with keyboard navigation, ARIA labels, and clear focus indicators.
+- **Mobile Friendly:** Looks and works great on both desktop and mobile.
+
+---
+
+## 🛠️ Tech in a Nutshell
 
 ### Frontend
 
 - React 18 + TypeScript
-- Vite
-- Tailwind CSS
-- Framer Motion (animations)
-- React Router
-- Axios
-- Vitest + React Testing Library
+- Vite, Tailwind CSS
+- Animations via Framer Motion
+- React Router, Axios for APIs
+- Tested with Vitest & React Testing Library
 
 ### Backend
 
-- Node.js + Express
-- TypeScript
-- Sequelize ORM
-- PostgreSQL
-- JWT Authentication
-- bcrypt (password hashing)
-- Zod (validation)
-- Multer (file uploads)
-- Jest + Supertest
+- Node.js (Express) + TypeScript
+- Sequelize ORM, PostgreSQL
+- Auth with JWT & password hashing (bcrypt)
+- Request validation (Zod)
+- File management (Multer)
+- Tested with Jest & Supertest
 
-### DevOps
+### Dev & Ops
 
-- Docker & Docker Compose
-- GitHub Actions CI/CD
-- Playwright (E2E testing)
+- Docker + Docker Compose
+- GitHub Actions: CI/CD pipeline
+- Playwright for end-to-end (E2E) tests
 
-## Prerequisites
+---
 
-- Node.js 20+
-- PostgreSQL 15+
-- npm or yarn
+## 🖥️ Getting Started
 
-## Setup Instructions
+### Option 1: Quickstart with Docker
 
-### Option 1: Docker (Recommended)
+1. **Clone this repository**:
+    ```bash
+    git clone <repository-url>
+    cd test-coding-assignment
+    ```
 
-1. Clone the repository:
+2. **Add your settings:**  
+   Create a `.env` (root directory) and fill in:
+    ```env
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=postgres
+    POSTGRES_DB=ai_studio
+    JWT_SECRET=your-secret-key-change-in-production
+    ```
 
-```bash
-git clone <repository-url>
-cd test-coding-assignment
-```
+3. **Spin everything up:**
+    ```bash
+    docker-compose up
+    ```
 
-2. Create a `.env` file in the root directory:
+- Frontend: [http://localhost:3000](http://localhost:3000)
+- Backend: [http://localhost:3001](http://localhost:3001)
+- Database: `localhost:5432`
 
-```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=ai_studio
-JWT_SECRET=your-secret-key-change-in-production
-```
 
-3. Start all services:
+### Option 2: Local Dev (Run Frontend & Backend Yourself)
 
-```bash
-docker-compose up
-```
+#### Backend
 
-The application will be available at:
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
-- PostgreSQL: localhost:5432
-
-### Option 2: Local Development
-
-#### Backend Setup
-
-1. Navigate to backend directory:
-
-```bash
-cd backend
-```
+1. Enter `/backend`:
+    ```bash
+    cd backend
+    ```
 
 2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-```bash
-npm install
-```
+3. Create your own `.env`:
+    ```env
+    NODE_ENV=development
+    PORT=3001
+    JWT_SECRET=your-secret-key-change-in-production
+    JWT_EXPIRES_IN=7d
+    DATABASE_URL=postgresql://user:password@localhost:5432/ai_studio
+    UPLOAD_DIR=./uploads
+    ```
 
-3. Create a `.env` file:
+4. Get your database ready:
+    ```bash
+    createdb ai_studio
+    ```
 
-```env
-NODE_ENV=development
-PORT=3001
-JWT_SECRET=your-secret-key-change-in-production
-JWT_EXPIRES_IN=7d
-DATABASE_URL=postgresql://user:password@localhost:5432/ai_studio
-UPLOAD_DIR=./uploads
-```
+5. Migrate:
+    ```bash
+    npm run db:migrate
+    ```
 
-4. Create PostgreSQL database:
+6. Start backend:
+    ```bash
+    npm run dev
+    ```
 
-```bash
-createdb ai_studio
-```
+#### Frontend
 
-5. Run migrations:
+1. Enter `/frontend`:
+    ```bash
+    cd frontend
+    ```
 
-```bash
-npm run db:migrate
-```
+2. Get dependencies:
+    ```bash
+    npm install
+    ```
 
-6. Start the backend server:
+3. Optionally set API URL in `.env`:
+    ```env
+    VITE_API_URL=http://localhost:3001/api
+    ```
 
-```bash
-npm run dev
-```
+4. Launch frontend:
+    ```bash
+    npm run dev
+    ```
 
-#### Frontend Setup
+---
 
-1. Navigate to frontend directory:
-
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Create a `.env` file (optional):
-
-```env
-VITE_API_URL=http://localhost:3001/api
-```
-
-4. Start the development server:
-
-```bash
-npm run dev
-```
-
-## Running Tests
-
-### Backend Tests
-
-```bash
-cd backend
-npm test
-```
-
-### Frontend Tests
-
-```bash
-cd frontend
-npm test
-```
-
-### E2E Tests
-
-```bash
-# Install Playwright browsers (first time only)
-npx playwright install
-
-# Run E2E tests
-npm run test:e2e
-```
-
-## Project Structure
+## Project Layout
 
 ```
 .
 ├── backend/
-│   ├── src/
-│   │   ├── __tests__/          # Backend tests
-│   │   ├── controllers/         # Route controllers
-│   │   ├── db/                  # Database configuration
-│   │   ├── middleware/          # Express middleware
-│   │   ├── models/              # Sequelize models
-│   │   ├── routes/              # API routes
-│   │   ├── services/            # Business logic
-│   │   └── validators/          # Zod validation schemas
-│   ├── uploads/                 # Uploaded images
-│   └── package.json
+│   └── src/
+│       ├── __tests__/        # Backend tests
+│       ├── controllers/      # Route controllers
+│       ├── db/               # Database config
+│       ├── middleware/       # Express middleware
+│       ├── models/           # Sequelize models
+│       ├── routes/           # API endpoints
+│       ├── services/         # Core logic
+│       └── validators/       # Input validation
 ├── frontend/
-│   ├── src/
-│   │   ├── __tests__/           # Frontend tests
-│   │   ├── components/          # React components
-│   │   ├── contexts/            # React contexts
-│   │   ├── pages/               # Page components
-│   │   ├── services/            # API services
-│   │   └── test/                # Test setup
-│   └── package.json
+│   └── src/
+│       ├── __tests__/        # Frontend tests
+│       ├── components/
+│       ├── contexts/
+│       ├── pages/
+│       ├── services/
+│       └── test/
 ├── tests/
-│   └── e2e.spec.ts              # E2E tests
+│   └── e2e.spec.ts           # E2E tests (Playwright)
 ├── .github/
 │   └── workflows/
-│       └── ci.yml               # CI/CD pipeline
+│       └── ci.yml            # Automated CI pipeline
 ├── docker-compose.yml
-├── OPENAPI.yaml                 # API specification
-├── EVAL.md                      # Evaluation checklist
-├── AI_USAGE.md                  # AI usage documentation
+├── OPENAPI.yaml              # API contract
+├── EVAL.md                   # Self-eval checklist
+├── AI_USAGE.md               # AI design notes
 └── README.md
 ```
 
-## API Endpoints
+---
 
-### Authentication
+## API Endpoints Overview
 
-- `POST /api/auth/signup` - Create new user account
-- `POST /api/auth/login` - Login with email and password
+### Auth
 
-### Generations
+- `POST /api/auth/signup` – Register new users
+- `POST /api/auth/login` – Log in with email & password
 
-- `POST /api/generations` - Create a new generation (requires auth)
-- `GET /api/generations?limit=5` - Get recent generations (requires auth)
+### Fashion Generations
 
-See `OPENAPI.yaml` for complete API documentation.
+- `POST /api/generations` – Kick off a new image generation (auth required)
+- `GET /api/generations?limit=5` – Fetch your latest generations (auth required)
+
+*See the `OPENAPI.yaml` for full API details.*
+
+---
 
 ## Environment Variables
 
-### Backend
+**Backend**
+- `NODE_ENV`, `PORT`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `DATABASE_URL`, `UPLOAD_DIR`
 
-- `NODE_ENV` - Environment (development/production)
-- `PORT` - Server port (default: 3001)
-- `JWT_SECRET` - Secret key for JWT tokens
-- `JWT_EXPIRES_IN` - JWT expiration time
-- `DATABASE_URL` - PostgreSQL connection string
-- `UPLOAD_DIR` - Directory for uploaded files
+**Frontend**
+- `VITE_API_URL`
 
-### Frontend
+---
 
-- `VITE_API_URL` - Backend API URL (default: http://localhost:3001/api)
+## Commands to Know
 
-## Development Scripts
+At the project **root**:
 
-### Root
+- `npm run dev` – Start backend & frontend (if script is defined)
+- `npm run test` – Run all tests
+- `npm run lint` – Lint code
 
-- `npm run dev` - Start both backend and frontend
-- `npm run test` - Run all tests
-- `npm run lint` - Lint all code
+In **backend/**:
 
-### Backend
+- `npm run dev` – Server in watch mode
+- `npm run build` – Production build
+- `npm test` – Run backend tests
+- `npm run lint` – Lint backend code
+- `npm run db:migrate` – Run DB migrations
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm test` - Run tests with coverage
-- `npm run lint` - Lint code
-- `npm run db:migrate` - Run database migrations
+In **frontend/**:
 
-### Frontend
+- `npm run dev` – React/Vite dev server
+- `npm run build` – Build static site
+- `npm test` – Run frontend tests
+- `npm run test:coverage` – Test w/ coverage output
+- `npm run lint` – Lint frontend code
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm test` - Run tests
-- `npm run test:coverage` - Run tests with coverage
-- `npm run lint` - Lint code
+---
 
 ## Testing
 
-The project includes comprehensive testing:
+All bases are covered:
+- **Unit:** Frontend (Vitest) & Backend (Jest)
+- **Integration:** API endpoints (Supertest)
+- **E2E:** User flows (Playwright)
+- **Coverage:** Reports for both client & server
 
-- **Unit Tests**: Backend (Jest) and Frontend (Vitest)
-- **Integration Tests**: API endpoint testing with Supertest
-- **E2E Tests**: Full user flow testing with Playwright
-- **Coverage Reports**: Generated for both backend and frontend
+---
 
-## CI/CD
+## Continuous Integration
 
-GitHub Actions workflow runs on every push and PR:
+- Automated CI pipeline (GitHub Actions) runs on every commit & PR:
+    - Backend: Test with PostgreSQL
+    - Frontend: Unit & component tests
+    - E2E: Playwright
+    - Coverage uploaded to Codecov
 
-- Backend tests with PostgreSQL service
-- Frontend tests
-- E2E tests with Playwright
-- Coverage reports uploaded to Codecov
+---
 
-## Known Limitations / TODOs
+## Known Limitations & Next Steps
 
-1. **Image Resizing**: Image resizing before upload (max width 1920px) is planned but not yet implemented. Can be added using Canvas API.
+- **Image Resizing:** Currently unimplemented, but planned (Canvas API, etc.).
+- **Error Simulation:** 20% error rate is hardcoded—making this configurable would be great.
+- **File Cleanup:** Uploaded files aren’t yet auto-cleaned. A cleanup cron job could help.
+- **Rate Limiting:** Not yet present, consider for production use!
+- **Image Storage:** Using local files for now—moving to S3/cloud would be a production upgrade.
 
-2. **Error Rate**: The 20% error simulation is random. For more realistic testing, consider making it configurable.
-
-3. **File Cleanup**: Uploaded files are not automatically cleaned up. Consider adding a cleanup job.
-
-4. **Rate Limiting**: No rate limiting implemented. Consider adding for production.
-
-5. **Image Storage**: Currently using local file system. Consider cloud storage (S3, etc.) for production.
+---
 
 ## License
 
-This project is part of a coding assignment.
+This project was built as part of a coding challenge.
 
-## Contact
+---
 
-For questions or issues, please contact the development team.
+## Need Help?
+
+Feel free to reach out to the dev team if you have questions, issues, or feedback! Contributions and suggestions are always welcome.
